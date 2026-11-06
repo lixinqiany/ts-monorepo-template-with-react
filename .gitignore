@@ -1,0 +1,15 @@
+.DS_Store
+node_modules
+.turbo
+*.log
+dist
+dist-ssr
+*.local
+.env
+.cache
+.dev
+/.data/
+.env.*
+!.env.example
+server/dist
+public/dist

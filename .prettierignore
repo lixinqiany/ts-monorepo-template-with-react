@@ -1,0 +1,9 @@
+node_modules/
+.git/
+.turbo/
+.data/
+**/.dev/
+**/dist/
+**/coverage/
+**/*.tsbuildinfo
+pnpm-lock.yaml

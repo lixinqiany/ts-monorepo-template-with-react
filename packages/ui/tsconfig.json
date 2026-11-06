@@ -1,0 +1,5 @@
+{
+  "extends": "@repo/typescript-config/react.json",
+  "include": ["index.ts", "components"],
+  "exclude": ["node_modules", "dist", "coverage"]
+}

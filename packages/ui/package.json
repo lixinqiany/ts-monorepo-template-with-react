@@ -1,0 +1,28 @@
+{
+  "name": "@repo/ui",
+  "author": "lixinqiany <yulixinqian805@163.com>",
+  "version": "0.0.1",
+  "exports": {
+    ".": "./index.ts",
+    "./counter": "./components/counter.tsx",
+    "./header": "./components/header.tsx"
+  },
+  "license": "MIT",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0"
+  },
+  "dependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "eslint": "10.9.1",
+    "typescript": "7.0.2"
+  },
+  "private": true
+}

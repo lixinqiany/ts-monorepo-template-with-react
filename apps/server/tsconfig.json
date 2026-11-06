@@ -1,0 +1,15 @@
+{
+  "extends": "@repo/typescript-config/node.json",
+  "include": ["src", "test", "dev.ts", "vitest.config*.ts", "rspack.config.ts"],
+  "exclude": ["node_modules", "dist", ".dev", "coverage"],
+  "compilerOptions": {
+    "rootDir": "../..",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "strictPropertyInitialization": false,
+    "types": ["vitest/globals", "node"],
+    "allowImportingTsExtensions": true
+  }
+}

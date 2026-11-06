@@ -1,0 +1,44 @@
+{
+  "$schema": "./node_modules/turbo/schema.json",
+  "ui": "tui",
+  "globalDependencies": ["scripts/**"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build", "check-types"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "$TURBO_ROOT$/package.json",
+        "$TURBO_ROOT$/pnpm-lock.yaml",
+        "$TURBO_ROOT$/pnpm-workspace.yaml",
+        "$TURBO_ROOT$/LICENSE"
+      ],
+      "outputs": ["dist/**", "!dist/node_modules/**"]
+    },
+    "lint": {
+      "dependsOn": ["^build", "^lint"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/eslint.config.mjs"]
+    },
+    "check-types": {
+      "dependsOn": ["^build", "^check-types"],
+      "outputs": []
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true,
+      "passThroughEnv": [
+        "PORT",
+        "WEB_PORT",
+        "NODE_OPTIONS",
+        "VSCODE_INSPECTOR_OPTIONS",
+        "DATA_DIR"
+      ]
+    },
+    "start": {
+      "cache": false,
+      "persistent": true,
+      "passThroughEnv": ["PORT", "WEB_PORT", "DATA_DIR"]
+    }
+  }
+}

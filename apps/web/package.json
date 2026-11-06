@@ -1,0 +1,31 @@
+{
+  "name": "@repo/web",
+  "author": "lixinqiany <yulixinqian805@163.com>",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development vite --clearScreen false",
+    "build": "tsc --noEmit && cross-env NODE_ENV=production vite build",
+    "start": "vite preview",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0"
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^24.19.2",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "@vitejs/plugin-react": "6.1.1",
+    "cross-env": "10.1.0",
+    "eslint": "10.9.1",
+    "typescript": "7.0.2",
+    "vite": "8.2.2"
+  }
+}
