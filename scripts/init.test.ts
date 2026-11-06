@@ -101,7 +101,11 @@ await test(
         name,
       );
     }
-    for (const name of ['README.md', 'apps/server/README.md'])
+    for (const name of [
+      'README.md',
+      'README.zh-CN.md',
+      'apps/server/README.md',
+    ])
       assert.doesNotMatch(
         await project.read(name),
         /pnpm (?:dev|build|start):web|apps\/web|packages\/ui/,

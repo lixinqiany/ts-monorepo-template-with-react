@@ -79,6 +79,7 @@ async function removeWeb(): Promise<void> {
   );
   for (const name of [
     'README.md',
+    'README.zh-CN.md',
     'apps/server/README.md',
     'packages/eslint-config/README.md',
     'packages/typescript-config/README.md',
