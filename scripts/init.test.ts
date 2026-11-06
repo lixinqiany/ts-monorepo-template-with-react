@@ -111,6 +111,12 @@ await test(
       before,
     );
     assert.equal(await project.read('keep-me.txt'), 'unrelated content');
+    if (existsSync(join(project.root, '.github/workflows/ci.yml'))) {
+      assert.match(
+        await project.read('.github/workflows/ci.yml'),
+        /variant: \[server\]/,
+      );
+    }
   },
 );
 

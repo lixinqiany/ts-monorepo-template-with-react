@@ -12,6 +12,8 @@
 
 需要 Node.js >= 24.20.0 和 pnpm。仓库通过 `packageManager` 固定使用 pnpm 11.24.0。
 
+`.node-version` 记录已验证的 Node.js 版本，GitHub Actions 使用相同版本。
+
 ```sh
 pnpm dlx degit lixinqiany/ts-monorepo-template-with-react my-project
 cd my-project
@@ -128,6 +130,14 @@ node --test scripts/init.test.ts
 ```
 
 包名 `@repo/*` 可以一直保留。新项目只需按需修改根 `package.json` 的名称、介绍和作者，无需批量替换内部包引用。
+
+GitHub Actions 自动检查模板构建、类型、lint、格式和测试，并将 Server 产物复制到仓库外验证生产依赖安装和 HTTP 启动。
+
+<!-- web:start -->
+
+CI 同时验证完整前后端和 `--no-web` 两种结果。裁剪后的新项目只保留后端检查任务。
+
+<!-- web:end -->
 
 ## License
 

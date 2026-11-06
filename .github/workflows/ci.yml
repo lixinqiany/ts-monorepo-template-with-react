@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify ${{ matrix.variant }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [fullstack, server]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - name: Test optional initialization
+        run: node --test scripts/init.test.ts
+      - name: Remove frontend for the server variant
+        if: matrix.variant == 'server'
+        run: node scripts/init.ts --no-web
+      - uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+          cache: true
+      - name: Update the pruned lockfile
+        if: matrix.variant == 'server'
+        run: pnpm install --no-frozen-lockfile
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check and build
+        run: |
+          pnpm exec prettier --check .
+          pnpm exec turbo run build check-types lint
+          pnpm --filter @repo/server test
+          pnpm --filter @repo/server test:e2e
+      - name: Verify standalone server distribution
+        shell: bash
+        run: |
+          delivery_dir=$(mktemp -d)
+          cp -R apps/server/dist/. "$delivery_dir/"
+          cd "$delivery_dir"
+          pnpm install --prod --frozen-lockfile
+          PORT=30321 node --enable-source-maps main.js > server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --silent --fail http://127.0.0.1:30321/api > response.txt; then
+              break
+            fi
+            if ! kill -0 "$server_pid" 2>/dev/null; then
+              cat server.log
+              exit 1
+            fi
+            sleep 1
+          done
+          test "$(cat response.txt)" = 'Hello World!'
+          test -d data
